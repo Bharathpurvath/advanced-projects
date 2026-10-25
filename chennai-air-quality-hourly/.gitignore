@@ -1,0 +1,6 @@
+data/raw/
+data/chennai_hourly.csv
+reports/*
+!reports/.gitkeep
+__pycache__/
+.venv/

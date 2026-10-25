@@ -1,0 +1,6 @@
+data/chat.txt
+data/*.txt
+reports/*
+!reports/.gitkeep
+__pycache__/
+.venv/

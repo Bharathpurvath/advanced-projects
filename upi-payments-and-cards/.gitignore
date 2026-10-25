@@ -1,0 +1,6 @@
+data/raw/
+reports/*
+!reports/.gitkeep
+upi_payments.db
+__pycache__/
+.venv/

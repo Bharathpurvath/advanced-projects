@@ -1,0 +1,5 @@
+data/observations.csv
+reports/*
+!reports/.gitkeep
+__pycache__/
+.venv/

@@ -1,33 +1,41 @@
-# Bharath B — Project Portfolio
+# Project portfolio — Bharath B
 
-**Live portfolio:** [bharathpurvath.github.io/advanced-projects](https://bharathpurvath.github.io/advanced-projects/)  
-**GitHub:** [Bharathpurvath](https://github.com/Bharathpurvath)
+[Personal portfolio](https://bharathpurvath.github.io/bharath-portfolio/) · [Project gallery](https://bharathpurvath.github.io/advanced-projects/)
 
-A project portfolio spanning data analysis, research, and software engineering prototypes.
+This repository contains six data-analytics case studies and 20 educational software-engineering labs. Each case study documents its question, data source, method, results, and limits.
 
-## Featured data project
+## Data analytics case studies
 
-The [India Remote Data Analyst Job Market Capstone](india-data-analyst-job-market-capstone/README.md) explores which skills appear in remote analyst listings open to applicants in India.
+| Project | Published work | Data and current scope |
+| --- | --- | --- |
+| [Online retail sales deep dive](online-retail-sales-deep-dive/README.md) | [Findings](online-retail-sales-deep-dive/reports/findings.md) · SQL · Python analysis · charts | UCI transaction sample; source workbook and SQLite database are downloaded/generated locally, not published. |
+| [WhatsApp group chat, decoded](whatsapp-group-chat-decoded/README.md) | [Synthetic demo findings](whatsapp-group-chat-decoded/reports/findings.md) · local-only parser | Public sample is entirely fictional. A real chat export and identifying outputs must stay private unless reviewed and anonymized. |
+| [Chennai air quality, hour by hour](chennai-air-quality-hourly/README.md) | [Findings](chennai-air-quality-hourly/reports/findings.md) · hourly sample · charts | Open-Meteo/CAMS model estimates and gridded weather, not local station readings. Daily collection and report refresh are scheduled. |
+| [UPI and cards](upi-payments-and-cards/README.md) | [Findings](upi-payments-and-cards/reports/findings.md) · RBI-derived monthly series · charts | RBI DBIE table, November 2019–July 2026 in the latest retrieved snapshot. Monthly refresh is scheduled. |
+| [Zomato vs Swiggy price gap](zomato-swiggy-price-gap/README.md) | [Synthetic demo findings](zomato-swiggy-price-gap/reports/findings.md) · blank collection workbook · Python analysis | All public demo values are invented. Real findings require manual, matched observations from the user's chosen neighbourhood; the project does not scrape the apps. |
+| [India data-analyst job-market capstone](india-data-analyst-job-market-capstone/README.md) | [Live dashboard](https://bharathpurvath.github.io/advanced-projects/india-data-analyst-job-market-capstone/reports/dashboard.html) · [findings](india-data-analyst-job-market-capstone/reports/findings.md) · SQL · Python pipeline | Himalayas public API, no API key. First filtered baseline: 44 remote analyst-title listings open to applicants in India. Weekly report refresh is scheduled. |
 
-- [Open the dashboard](https://bharathpurvath.github.io/advanced-projects/india-data-analyst-job-market-capstone/reports/dashboard.html)
-- [Read the findings](india-data-analyst-job-market-capstone/reports/findings.md)
-- [Review the methodology and run instructions](india-data-analyst-job-market-capstone/README.md)
+Personal inputs are not included. The public repository contains only allowed source material, aggregate reporting, and explicitly synthetic examples. Raw UCI files, SQLite databases, raw API payloads, real WhatsApp exports, and real food-app observations stay out of Git.
 
-The first snapshot retained 44 analyst-title postings from 467 broad search candidates. SQL appeared in 34 listings and Python in 30. Only two listings disclosed salary. This is a single Himalayas remote-job snapshot filtered for India eligibility, not a census of the Indian job market or a Chennai/on-site study. Weekly changes need additional successful pulls.
+### Scheduled data refreshes
 
-The project uses Himalayas' public Jobs API without an API key. It publishes aggregate reporting, not raw job descriptions or individual listings. See the [API documentation](https://himalayas.app/api) and [terms](https://himalayas.app/terms).
+GitHub Actions workflows live in the repository-root `.github/workflows/` directory:
 
-## Engineering project labs
+- `chennai-air-quality.yml` collects the most recent two days daily, appends the public hourly series, and regenerates aggregate findings.
+- `upi-monthly-refresh.yml` refreshes the RBI series monthly and regenerates the report.
+- `job-market-weekly.yml` collects weekly, keeps the listing database as a private workflow artifact for history, and publishes aggregate outputs only.
 
-The repository also contains 20 educational software engineering labs. Each includes an interactive browser demo, a FastAPI backend starter, and setup notes. The demos use sample data locally; backend services run on your computer. They are learning prototypes, not production services. Live payments, cloud storage, GitHub writes, and paid AI APIs are not enabled. Do not put real credentials in frontend code.
+Each workflow supports manual dispatch. Source allowances and update timing apply; scheduled jobs may start late.
 
-## Running a backend
+## Software engineering labs
 
-Open a project's `backend` folder and run:
+The 20 advanced labs each include an interactive browser demo in `<project>/frontend/`, a FastAPI starter in `<project>/backend/main.py`, and setup notes. They are educational prototypes using local sample data, not production services. Live payments, cloud storage, GitHub writes, and paid AI APIs are not enabled. Never place real credentials in frontend code.
+
+Run a lab backend from its `backend` directory:
 
 ```powershell
 python -m pip install -r requirements.txt
 python -m uvicorn main:app --reload
 ```
 
-The API documentation is available at `http://127.0.0.1:8000/docs` while the backend is running.
+The API docs are at `http://127.0.0.1:8000/docs` while the backend is running.

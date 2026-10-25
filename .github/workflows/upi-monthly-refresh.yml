@@ -1,0 +1,28 @@
+name: Refresh RBI UPI and card data
+
+on:
+  schedule:
+    - cron: "30 6 5 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  collect-and-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r upi-payments-and-cards/requirements.txt
+      - run: python upi-payments-and-cards/src/collect.py
+      - run: python upi-payments-and-cards/src/analyze.py
+      - name: Publish aggregate data and report
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -f upi-payments-and-cards/data/monthly_payments.csv
+          git add -f upi-payments-and-cards/reports/findings.md upi-payments-and-cards/reports/*.csv upi-payments-and-cards/reports/*.png
+          git diff --cached --quiet || { git commit -m "Refresh RBI payment-system analysis"; git push; }

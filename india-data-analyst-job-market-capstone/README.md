@@ -22,7 +22,7 @@ The first API pull reported 467 broad keyword-search candidates. A title filter 
 2. Run `python -m venv .venv`, activate it, and install `pip install -r requirements.txt`.
 3. Collect the current API search sample: `python src/collect.py`.
 4. Generate reports: `python src/analyze.py`.
-5. Repeat weekly using `run_weekly.ps1`; optionally register the Windows task with `./register_weekly_task.ps1`.
+5. Repeat weekly using `run_weekly.ps1`; optionally register the Windows task with `./register_weekly_task.ps1`. The published portfolio repository also has a weekly GitHub Actions workflow that stores the database as a private workflow artifact and publishes only aggregate reports.
 
 No key or account is required. Collection pauses between requests and paginates through the results available at collection time. The API's public allowance is shared; avoid frequent polling. The feed refreshes daily, so weekly collection is sufficient for this study.
 

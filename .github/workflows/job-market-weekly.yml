@@ -1,0 +1,57 @@
+name: Refresh analyst job-market snapshot
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  collect-and-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/github-script@v7
+        id: previous
+        with:
+          script: |
+            const { data } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "job-market-weekly.yml",
+              branch: context.ref.replace("refs/heads/", ""),
+              status: "success",
+              per_page: 10
+            });
+            const previous = data.workflow_runs.find(run => run.id !== context.runId);
+            if (previous) core.setOutput("run_id", String(previous.id));
+      - name: Restore private collection history
+        if: steps.previous.outputs.run_id != ''
+        uses: actions/download-artifact@v4
+        with:
+          name: himalayas-snapshot-db
+          path: india-data-analyst-job-market-capstone/data
+          run-id: ${{ steps.previous.outputs.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: python -m pip install -r india-data-analyst-job-market-capstone/requirements.txt
+      - run: python india-data-analyst-job-market-capstone/src/collect.py
+      - run: python india-data-analyst-job-market-capstone/src/analyze.py
+      - name: Publish aggregate report only
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -f india-data-analyst-job-market-capstone/reports/findings.md india-data-analyst-job-market-capstone/reports/dashboard.html
+          git add -f india-data-analyst-job-market-capstone/reports/*.csv india-data-analyst-job-market-capstone/reports/*.png
+          git diff --cached --quiet || { git commit -m "Refresh analyst job-market report"; git push; }
+      - name: Keep collection history as a private workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: himalayas-snapshot-db
+          path: india-data-analyst-job-market-capstone/data/himalayas_jobs.db
+          retention-days: 90

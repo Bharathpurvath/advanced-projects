@@ -1,0 +1,21 @@
+week,date,pair_restaurant,dish,swiggy,zomato,pair_status
+1,2026-09-02,id:DEMO01,Demo Rice Bowl,1,1,Paired
+1,2026-09-02,id:DEMO02,Demo Rice Bowl,1,1,Paired
+1,2026-09-02,id:DEMO03,Demo Rice Bowl,1,1,Paired
+1,2026-09-02,id:DEMO04,Demo Rice Bowl,1,1,Paired
+1,2026-09-02,id:DEMO05,Demo Rice Bowl,1,1,Paired
+2,2026-09-10,id:DEMO01,Demo Rice Bowl,1,1,Paired
+2,2026-09-10,id:DEMO02,Demo Rice Bowl,1,1,Paired
+2,2026-09-10,id:DEMO03,Demo Rice Bowl,1,1,Paired
+2,2026-09-10,id:DEMO04,Demo Rice Bowl,1,1,Paired
+2,2026-09-10,id:DEMO05,Demo Rice Bowl,1,1,Paired
+3,2026-09-19,id:DEMO01,Demo Rice Bowl,1,1,Paired
+3,2026-09-19,id:DEMO02,Demo Rice Bowl,1,1,Paired
+3,2026-09-19,id:DEMO03,Demo Rice Bowl,1,1,Paired
+3,2026-09-19,id:DEMO04,Demo Rice Bowl,1,1,Paired
+3,2026-09-19,id:DEMO05,Demo Rice Bowl,1,1,Paired
+4,2026-09-27,id:DEMO01,Demo Rice Bowl,1,1,Paired
+4,2026-09-27,id:DEMO02,Demo Rice Bowl,1,1,Paired
+4,2026-09-27,id:DEMO03,Demo Rice Bowl,1,1,Paired
+4,2026-09-27,id:DEMO04,Demo Rice Bowl,1,1,Paired
+4,2026-09-27,id:DEMO05,Demo Rice Bowl,1,1,Paired
