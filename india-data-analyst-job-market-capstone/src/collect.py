@@ -1,7 +1,8 @@
 from __future__ import annotations
 import argparse
-import json
-import os
+import hashlib
+import html
+import re
 import sqlite3
 import sys
 import time
@@ -10,12 +11,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
-from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parents[1]
-DB = ROOT / "data" / "jobs.db"
-BASE = "https://api.adzuna.com/v1/api/jobs/in/search/{page}"
-SCOPES = (("india", None), ("chennai", "Chennai"))
+DB = ROOT / "data" / "himalayas_jobs.db"
+API = "https://himalayas.app/jobs/api/search"
+QUERY = "data analyst"
+COUNTRY = "IN"
+TITLE_PATTERN = re.compile(r"\bdata\s+analyst\b|\b(?:business intelligence|bi|analytics?)\s+analyst\b|\banalyst[,/]\s*(?:data|analytics?)\b", re.I)
 SKILLS = {
     "SQL": [r"\bsql\b", r"mysql", r"postgres(?:ql)?", r"sqlite", r"sql server"],
     "Excel": [r"\bexcel\b", r"spreadsheets?", r"\bgoogle sheets\b"],
@@ -39,11 +41,10 @@ CREATE TABLE IF NOT EXISTS pulls(
  total_reported INTEGER, records_received INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'running', error TEXT
 );
 CREATE TABLE IF NOT EXISTS jobs(
- ad_id TEXT PRIMARY KEY, title TEXT NOT NULL, company TEXT, city TEXT, location_display TEXT,
- created_at TEXT, salary_min REAL, salary_max REAL, salary_is_predicted INTEGER,
- contract_type TEXT, contract_time TEXT, category TEXT, redirect_url TEXT,
- description TEXT, description_hash TEXT, first_seen TEXT NOT NULL, last_seen TEXT NOT NULL,
- experience_level TEXT NOT NULL DEFAULT 'unspecified'
+ ad_id TEXT PRIMARY KEY, title TEXT NOT NULL, company TEXT, city TEXT,
+ created_at TEXT, salary_min REAL, salary_max REAL, salary_currency TEXT, salary_period TEXT,
+ experience_level TEXT NOT NULL DEFAULT 'unspecified', source_url TEXT,
+ description_hash TEXT, first_seen TEXT NOT NULL, last_seen TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS pull_jobs(
  pull_id TEXT NOT NULL REFERENCES pulls(pull_id), ad_id TEXT NOT NULL REFERENCES jobs(ad_id),
@@ -68,119 +69,98 @@ def connect():
         con.execute("INSERT OR IGNORE INTO skills(skill) VALUES(?)", (name,))
     return con
 
-def experience(text: str) -> str:
-    import re
-    t = text.lower()
-    if re.search(r"\b(intern|internship)\b", t): return "internship"
-    if re.search(r"\b(fresher|entry[- ]level|graduate|0\s*[-–to]{1,3}\s*2\s*years?)\b", t): return "entry"
-    if re.search(r"\b(senior|sr\.?|lead|principal|staff analyst)\b", t): return "senior"
-    if re.search(r"\b(\d+)\s*\+?\s*years?\b", t):
-        n = int(re.search(r"\b(\d+)\s*\+?\s*years?\b", t).group(1))
+def plain_text(value: str) -> str:
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", value or ""))).strip()
+
+def seniority(job: dict, content: str) -> str:
+    labels = " ".join(job.get("seniority") or []).lower()
+    text = labels + " " + content.lower()
+    if re.search(r"\b(intern|internship)\b", text): return "internship"
+    if re.search(r"\b(entry[- ]level|junior|graduate|fresher)\b", labels): return "entry"
+    if re.search(r"\b(senior|lead|principal|staff)\b", labels): return "senior"
+    if re.search(r"\b(mid[- ]level|mid)\b", labels): return "mid"
+    years = re.search(r"\b(\d+)\s*\+?\s*years?\b", text)
+    if years:
+        n = int(years.group(1))
         if n <= 2: return "entry"
         if n >= 5: return "senior"
         return "mid"
     return "unspecified"
 
-def city_from(ad: dict, scope: str) -> str:
-    loc = ad.get("location") or {}
-    areas = loc.get("area") or []
-    display = (loc.get("display_name") or "").strip()
-    if scope == "chennai": return "Chennai"
-    for item in reversed(areas):
-        if item and item.lower() not in {"india", "in"}:
-            return str(item)
-    return display.split(",")[0].strip() if display else "Unspecified"
-
-def save_ad(con, ad, pull_id: str, scope: str, collected: str):
-    import hashlib
-    import re
-    ad_id = str(ad.get("id") or "").strip()
+def save_job(con, job: dict, pull_id: str, collected: str):
+    ad_id = str(job.get("guid") or "").strip()
     if not ad_id: return False
-    title = str(ad.get("title") or "Unknown title")
-    desc = str(ad.get("description") or "")
-    company = (ad.get("company") or {}).get("display_name")
-    location = ad.get("location") or {}
-    city = city_from(ad, scope)
-    text = f"{title}\n{desc}"
-    h = hashlib.sha256(desc.encode("utf-8")).hexdigest()
-    salary_min, salary_max = ad.get("salary_min"), ad.get("salary_max")
-    try: salary_min = float(salary_min) if salary_min is not None else None
-    except (TypeError, ValueError): salary_min = None
-    try: salary_max = float(salary_max) if salary_max is not None else None
-    except (TypeError, ValueError): salary_max = None
-    con.execute("""INSERT INTO jobs(ad_id,title,company,city,location_display,created_at,salary_min,salary_max,salary_is_predicted,contract_type,contract_time,category,redirect_url,description,description_hash,first_seen,last_seen,experience_level)
-    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-    ON CONFLICT(ad_id) DO UPDATE SET title=excluded.title, company=excluded.company, city=excluded.city,
-      location_display=excluded.location_display, created_at=excluded.created_at, salary_min=excluded.salary_min,
-      salary_max=excluded.salary_max, salary_is_predicted=excluded.salary_is_predicted,
-      contract_type=excluded.contract_type, contract_time=excluded.contract_time, category=excluded.category,
-      redirect_url=excluded.redirect_url, description=excluded.description, description_hash=excluded.description_hash,
-      last_seen=excluded.last_seen, experience_level=excluded.experience_level""",
-      (ad_id,title,company,city,str(location.get("display_name") or ""),ad.get("created"),salary_min,salary_max,
-       int(bool(ad.get("salary_is_predicted"))),ad.get("contract_type"),ad.get("contract_time"),
-       (ad.get("category") or {}).get("label"),ad.get("redirect_url"),desc,h,collected,collected,experience(text)))
-    con.execute("INSERT OR IGNORE INTO pull_jobs(pull_id,ad_id,scope) VALUES(?,?,?)", (pull_id,ad_id,scope))
+    title = str(job.get("title") or "Unknown title")
+    if not TITLE_PATTERN.search(title): return False
+    excerpt = plain_text(job.get("excerpt") or "")
+    description = plain_text(job.get("description") or "")
+    content = f"{title}\n{excerpt}\n{description}"
+    description_hash = hashlib.sha256(description.encode("utf-8")).hexdigest()
+    pub_date = job.get("pubDate")
+    try: created_at = datetime.fromtimestamp(int(pub_date), tz=timezone.utc).isoformat(timespec="seconds") if pub_date else None
+    except (TypeError, ValueError, OSError): created_at = None
+    def number(value):
+        try: return float(value) if value is not None else None
+        except (TypeError, ValueError): return None
+    salary_min, salary_max = number(job.get("minSalary")), number(job.get("maxSalary"))
+    # Country-filtered API results are remote-eligible for India; source fields do not establish a Chennai worksite.
+    city = "India-eligible remote"
+    con.execute("""INSERT INTO jobs(ad_id,title,company,city,created_at,salary_min,salary_max,salary_currency,salary_period,experience_level,source_url,description_hash,first_seen,last_seen)
+    VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+    ON CONFLICT(ad_id) DO UPDATE SET title=excluded.title,company=excluded.company,city=excluded.city,
+    created_at=excluded.created_at,salary_min=excluded.salary_min,salary_max=excluded.salary_max,
+    salary_currency=excluded.salary_currency,salary_period=excluded.salary_period,
+    experience_level=excluded.experience_level,source_url=excluded.source_url,
+    description_hash=excluded.description_hash,last_seen=excluded.last_seen""",
+    (ad_id,title,job.get("companyName"),city,created_at,salary_min,salary_max,job.get("currency"),job.get("salaryPeriod"),
+     seniority(job,content),job.get("applicationLink") or ad_id,description_hash,collected,collected))
+    inserted = con.execute("INSERT OR IGNORE INTO pull_jobs(pull_id,ad_id,scope) VALUES(?,?,?)",(pull_id,ad_id,"india_remote")).rowcount == 1
     for skill, patterns in SKILLS.items():
-        if any(re.search(p, text, flags=re.I) for p in patterns):
-            sid = con.execute("SELECT skill_id FROM skills WHERE skill=?", (skill,)).fetchone()[0]
-            con.execute("INSERT OR IGNORE INTO pull_skills(pull_id,ad_id,skill_id) VALUES(?,?,?)", (pull_id,ad_id,sid))
-    return True
+        if any(re.search(pattern,content,flags=re.I) for pattern in patterns):
+            skill_id=con.execute("SELECT skill_id FROM skills WHERE skill=?",(skill,)).fetchone()[0]
+            con.execute("INSERT OR IGNORE INTO pull_skills(pull_id,ad_id,skill_id) VALUES(?,?,?)",(pull_id,ad_id,skill_id))
+    return inserted
 
 def main():
-    parser = argparse.ArgumentParser(description="Collect job ads using Adzuna's official API.")
-    parser.add_argument("--pages", type=int, default=1, help="Pages per scope; API page numbering starts at 1")
-    parser.add_argument("--results-per-page", type=int, default=50)
-    parser.add_argument("--sleep", type=float, default=1.0, help="Pause between requests")
-    args = parser.parse_args()
-    if args.pages < 1 or args.results_per_page < 1 or args.results_per_page > 50:
-        parser.error("Use pages >= 1 and results-per-page from 1 to 50.")
-    load_dotenv(ROOT / ".env")
-    app_id, app_key = os.getenv("ADZUNA_APP_ID"), os.getenv("ADZUNA_APP_KEY")
-    if not app_id or not app_key or app_id == "your_app_id" or app_key == "your_app_key":
-        sys.exit("Set ADZUNA_APP_ID and ADZUNA_APP_KEY in .env. No request was sent.")
-    con = connect()
-    session = requests.Session()
-    session.headers.update({"Accept":"application/json", "User-Agent":"IndiaJobMarketResearch/1.0 (personal research)"})
-    grand = 0
+    parser=argparse.ArgumentParser(description="Collect India-eligible remote analyst jobs from Himalayas' public API.")
+    parser.add_argument("--max-pages",type=int,default=50,help="Maximum search pages per pull; stop sooner when an empty page is reached")
+    parser.add_argument("--sleep",type=float,default=1.0,help="Pause between API requests")
+    args=parser.parse_args()
+    if args.max_pages < 1: parser.error("max-pages must be at least 1")
+    con=connect()
+    collected=datetime.now(timezone.utc).isoformat(timespec="seconds")
+    pull_id=str(uuid.uuid4())
+    con.execute("INSERT INTO pulls(pull_id,scope,collected_at,query,pages_requested,results_per_page) VALUES(?,?,?,?,?,?)",
+                (pull_id,"india_remote",collected,QUERY,args.max_pages,20))
+    con.commit()
+    session=requests.Session()
+    session.headers.update({"Accept":"application/json","User-Agent":"IndiaRemoteAnalystResearch/1.0 (personal portfolio study)"})
+    received=0
     try:
-        for scope, where in SCOPES:
-            pull_id = str(uuid.uuid4())
-            collected = datetime.now(timezone.utc).isoformat(timespec="seconds")
-            query = "data analyst"
-            con.execute("INSERT INTO pulls(pull_id,scope,collected_at,query,pages_requested,results_per_page) VALUES(?,?,?,?,?,?)",
-                        (pull_id,scope,collected,query,args.pages,args.results_per_page))
-            received = 0
-            try:
-                for page in range(1,args.pages+1):
-                    params = {"app_id":app_id,"app_key":app_key,"results_per_page":args.results_per_page,
-                              "what":query,"content-type":"application/json"}
-                    if where:
-                        params["where"] = where
-                        params["distance"] = 25
-                    response = session.get(BASE.format(page=page), params=params, timeout=45)
-                    response.raise_for_status()
-                    payload = response.json()
-                    if not isinstance(payload, dict) or not isinstance(payload.get("results", []), list):
-                        raise ValueError("Unexpected API response shape; expected a JSON object with results[].")
-                    if page == 1:
-                        con.execute("UPDATE pulls SET total_reported=? WHERE pull_id=?", (payload.get("count"),pull_id))
-                    ads = payload.get("results", [])
-                    for ad in ads:
-                        save_ad(con,ad,pull_id,scope,collected); received += bool(ad.get("id"))
-                    con.commit()
-                    if not ads: break
-                    if page < args.pages: time.sleep(args.sleep)
-                con.execute("UPDATE pulls SET records_received=?,status='success' WHERE pull_id=?", (received,pull_id))
-                con.commit()
-                print(f"{scope}: received {received} ads; pull_id={pull_id}")
-                grand += received
-            except Exception as exc:
-                con.execute("UPDATE pulls SET records_received=?,status='failed',error=? WHERE pull_id=?", (received,str(exc)[:500],pull_id))
-                con.commit()
-                raise
+        for page in range(1,args.max_pages+1):
+            response=session.get(API,params={"q":QUERY,"country":COUNTRY,"sort":"recent","page":page},timeout=45)
+            response.raise_for_status()
+            payload=response.json()
+            if not isinstance(payload,dict) or not isinstance(payload.get("jobs"),list):
+                raise ValueError("Unexpected API response shape; expected JSON with jobs[].")
+            if page == 1:
+                con.execute("UPDATE pulls SET total_reported=? WHERE pull_id=?",(payload.get("totalCount"),pull_id))
+            jobs=payload["jobs"]
+            if not jobs: break
+            for job in jobs:
+                received += bool(save_job(con,job,pull_id,collected))
+            con.commit()
+            print(f"Page {page}: {len(jobs)} returned; {received} unique saved so far")
+            if page < args.max_pages: time.sleep(args.sleep)
+        con.execute("UPDATE pulls SET records_received=?,status='success' WHERE pull_id=?",(received,pull_id))
+        con.commit()
+        print(f"Completed pull {pull_id}: {received} unique India-eligible remote jobs saved to {DB}")
+    except Exception as exc:
+        con.execute("UPDATE pulls SET records_received=?,status='failed',error=? WHERE pull_id=?",(received,str(exc)[:500],pull_id))
+        con.commit()
+        raise
     finally:
         con.close()
-    print(f"Done. {grand} scope-records saved to {DB}")
 
 if __name__ == "__main__": main()
 

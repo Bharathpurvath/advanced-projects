@@ -1,58 +1,50 @@
-# India Data Analyst Job Market Capstone
+# India Remote Data Analyst Job Market Capstone
 
-**Dashboard:** [Open the current dashboard](reports/dashboard.html) · **Status:** pipeline ready; real postings require Adzuna API credentials and weekly collection.
+**Dashboard:** [Open current dashboard](reports/dashboard.html) · **Scope:** remote roles open to India-based applicants. This source has no reliable Chennai worksite filter, so the project does not claim to represent Chennai or on-site vacancies.
 
-**Question:** What skills do data-analyst postings in India request, how do advertised salaries vary by location and experience, and how do postings change across weekly snapshots?
+## Question
 
-This is a reproducible research pipeline, not a findings report yet. It contains no invented job records. Findings and charts appear after you add Adzuna API credentials and collect real snapshots.
+What skills do India-eligible remote data analyst job listings ask for, what salary ranges do they disclose by experience level, and how do the number and mix of listings change across weekly snapshots?
 
-## Data and use
+## Data source and access
 
-Data comes from Adzuna's official job-search API (`jobs/in/search/{page}`), queried for `data analyst` across India and Chennai. The project stores API-returned postings in a local SQLite database, derives skill flags from title/description text, and records each collection run for time comparisons. Collection dates are UTC. Search results are a sample surfaced by Adzuna's API and are not a census of the Indian job market.
+This project uses the [Himalayas public Jobs API](https://himalayas.app/api), which supports country-filtered searches without an API key. The API documentation lists country filtering and exposes title, description, seniority, salary, currency, and pay period when supplied. It refreshes daily; this project collects weekly snapshots. A search API result is a platform sample, not a census of India's job market.
 
-Adzuna documents API access, required `app_id`/`app_key`, and the search endpoint in its [overview](https://developer.adzuna.com/overview) and [search documentation](https://developer.adzuna.com/docs/search). Its [terms of service](https://developer.adzuna.com/docs/terms_of_service) permit personal and academic research; other uses may require written agreement. This project is for personal portfolio research. Review current terms and your account limits before collecting or publishing data. Do not publish raw ad text or credentials. The database stays local by default.
+The query searches `data analyst` and filters `country=IN`. The API search matches job content broadly, so the collector keeps only titles matching data analyst, analytics analyst, or business-intelligence analyst patterns; unrelated jobs that mention the phrase only in a description are excluded. Himalayas listings are remote roles; the filter means they are open to applicants in India, not that the employer or worksite is in India. There is no Chennai city filter in this API. The project analyzes aggregates only, links back to Himalayas as the source, and does not publish copied job descriptions or individual listings. Follow the API's [terms and API-use rules](https://himalayas.app/terms) and [API documentation](https://himalayas.app/api), including its apply-link and attribution requirements if displaying listings.
 
-## Setup
+## Initial snapshot — 25 October 2026
+
+The first API pull reported 467 broad keyword-search candidates. A title filter retained 44 data analyst, analytics analyst, and business-intelligence analyst listings eligible to remote applicants in India. In this filtered snapshot, SQL appeared in 34/44 (77.3%), data visualization in 32/44 (72.7%), and Python in 30/44 (68.2%). Only 2/44 (4.5%) disclosed salary: one INR annual range (₹700,000–₹1,000,000) and one USD annual range ($98,000–$125,000). The salary sample is too small for a stable market estimate. This is one weekly baseline pull; temporal change needs later pulls.
+
+## Run locally
 
 1. Install Python 3.10+.
-2. In this folder run `python -m venv .venv`, then activate it and run `pip install -r requirements.txt`.
-3. Copy `.env.example` to `.env` and fill in credentials from your Adzuna developer account. Never commit `.env`.
-4. Collect a snapshot: `python src/collect.py --pages 2 --results-per-page 50`.
-5. Build metrics and dashboard exports: `python src/analyze.py`.
-6. Repeat collection weekly. Each run gets a `pull_id`; SQL retains first/last seen dates and weekly snapshots. Schedule `python src/collect.py` with Windows Task Scheduler or cron, then run analysis after each pull.
+2. Run `python -m venv .venv`, activate it, and install `pip install -r requirements.txt`.
+3. Collect the current API search sample: `python src/collect.py`.
+4. Generate reports: `python src/analyze.py`.
+5. Repeat weekly using `run_weekly.ps1`; optionally register the Windows task with `./register_weekly_task.ps1`.
 
-The API page count and result limits are configurable to respect account quotas. Start with a small pull. The collector runs one query for India and one for Chennai (25 km radius); Chennai jobs may also occur in the national query. The `pull_jobs` table preserves which query returned each posting.
+No key or account is required. Collection pauses between requests and paginates through the results available at collection time. The API's public allowance is shared; avoid frequent polling. The feed refreshes daily, so weekly collection is sufficient for this study.
 
 ## Outputs
 
-`data/jobs.db` is created locally. Analysis writes summarized CSVs, chart PNGs, and `reports/dashboard.html` for use in Power BI/Tableau or as a local preview. CSVs are safe aggregate tables; inspect them before sharing. The dashboard includes counts, not ad descriptions or employer-level extracts.
+- `data/himalayas_jobs.db`: local history; ignored by Git. Job descriptions are processed in memory for skill extraction and are not stored in the database.
+- `reports/skill_demand_latest.csv`: mention count and share per skill.
+- `reports/salary_coverage_latest.csv`: total postings and salary coverage.
+- `reports/salary_by_experience.csv`: salary groups split by experience label, currency, and pay period. Do not compare different currencies or pay periods directly.
+- `reports/posting_counts_over_time.csv`: counts across weekly pulls.
+- `reports/dashboard.html` and charts: aggregate dashboard and figures.
 
 ## Definitions and caveats
 
-- **Skill demand:** share of unique observed postings whose title/description contains a skill's maintained keyword patterns. One posting can mention multiple skills; percentages need not sum to 100%.
-- **Salary:** API `salary_min` / `salary_max` values are stored as returned. Salary comparisons include only postings with disclosed salary. Do not infer an undisclosed salary from title or location.
-- **Experience:** heuristic classification from explicit wording (internship, entry-level/fresher, senior/lead/principal, or years-of-experience phrases). Ambiguous ads remain `unspecified`; it is not an inferred candidate seniority label.
-- **Change over time:** compare the first and latest collection `pull_id` for each query scope. Search result ranking, API coverage, duplicates, and ads expiring between pulls can change the observed sample.
-- **Duplicates:** Adzuna ad IDs identify the record. A posting returned by both scopes is one job for deduplicated skill/salary summaries, but it remains linked to both scopes in `pull_jobs`.
-- **Salary currency/period:** preserve the API values as returned; confirm the country API's unit and period in the current response/account documentation before interpreting or comparing values. The dashboard labels values as API-reported and avoids converting to annual pay.
+- **Skill demand:** keyword matches in listing title, excerpt, and description HTML after stripping markup. A listing can mention several skills, so percentages do not add to 100%.
+- **Experience:** use the API seniority label when it is specific; otherwise use conservative explicit wording rules. Ambiguous postings are `unspecified`.
+- **Salary:** keep API minimum/maximum, currency, and period as reported. Unreported salary stays missing; no conversion or imputation.
+- **Weekly change:** compares returned search results, not total labor demand. New listings, ranking, query coverage, and roles leaving the platform can change counts.
+- **Geography:** India eligibility is not a city/worksite location. No Chennai inference is made.
 
-## Project layout
+## Repository data policy
 
-- `src/collect.py` — official API ingestion and SQLite persistence
-- `src/analyze.py` — SQL-backed metrics and aggregate exports
-- `sql/analysis.sql` — reusable example queries
-- `data/` — local database (ignored by Git)
-- `reports/` — generated aggregates, charts, and dashboard (ignored by Git)
-
-## Case study template
-
-After at least four weekly pulls, write a short case study with the sample dates, query parameters, number of unique ads, top skills, salary coverage, city/experience sample sizes, and first-to-last changes. Include caveats and one chart per claim. Do not publish a conclusion until real pulls have populated the database.
-
-### Weekly collection on Windows
-
-After `.env` is configured and a manual run succeeds, open PowerShell in this folder and run `./register_weekly_task.ps1` to register a Monday 8:00 AM local-time task. Review/edit it in Windows Task Scheduler. The task runs `run_weekly.ps1`, which collects two pages per scope and refreshes reports. To remove it, run `Unregister-ScheduledTask -TaskName 'India Data Analyst Job Market Weekly Collection' -Confirm:$false`.
-
-The official API schema lists `in` as a supported country code and documents `where` for place-based search: [live API schema](https://developer.adzuna.com/swagger/spec/test2.json). Confirm the endpoint returns useful coverage for the selected query when you first run it.
-
+The public repository contains code and aggregate reporting only. The database and generated raw job data are local. Do not commit individual descriptions or bulk job listing exports.
 
 
