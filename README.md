@@ -1,6 +1,6 @@
 # Advanced Projects
 
-This repository contains 20 advanced software engineering project labs. Each project has an interactive browser demo in its `<project>/frontend/`, a FastAPI backend starter in its `<project>/backend/main.py`, and its own setup guide.
+This repository contains 20 advanced software engineering project labs and a data analytics capstone. The 20 engineering labs each have an interactive browser demo in `<project>/frontend/`, a FastAPI backend starter in `<project>/backend/main.py`, and a setup guide.\n\nThe [India Data Analyst Job Market Capstone](india-data-analyst-job-market-capstone/README.md) is a separate research workflow using Adzuna’s official API. Its [dashboard](india-data-analyst-job-market-capstone/reports/dashboard.html) clearly marks when real data is pending; the project does not publish raw job descriptions or credentials.
 
 ## Run a backend
 
