@@ -42,6 +42,8 @@ jobs:
       - run: python -m pip install -r india-data-analyst-job-market-capstone/requirements.txt
       - run: python india-data-analyst-job-market-capstone/src/collect.py
       - run: python india-data-analyst-job-market-capstone/src/analyze.py
+      - name: Export role-skill aggregate for Power BI
+        run: python india-data-analyst-job-market-capstone/src/export_role_skill.py
       - name: Publish aggregate report only
         run: |
           git config user.name github-actions[bot]
