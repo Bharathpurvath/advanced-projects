@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>India Remote Analyst Job Market — Report Preview</title>
+<style>
+:root{color-scheme:dark;--bg:#07131c;--panel:#10232d;--panel2:#142b35;--line:#24434e;--text:#eef8f8;--muted:#9cb5bd;--teal:#4dd6c2;--blue:#7cb7ff;--amber:#f2c879}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#15313b 0%,var(--bg) 55%);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:1180px;margin:auto;padding:28px 18px 54px}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.15em;color:var(--teal);font-weight:700}
+h1{font-size:clamp(26px,4vw,42px);line-height:1.12;margin:8px 0 10px}h2{font-size:22px;margin:0 0 6px}p{color:var(--muted);margin:6px 0 0}.top{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:24px;flex-wrap:wrap}
+.pill{border:1px solid #38616b;border-radius:999px;padding:7px 11px;color:#b6d7dc;font-size:12px;white-space:nowrap}
+.tabs{display:flex;gap:8px;margin:22px 0 16px;flex-wrap:wrap}.tab{background:transparent;border:1px solid var(--line);color:var(--muted);padding:10px 16px;border-radius:10px;font:inherit;cursor:pointer}.tab.active{background:var(--teal);color:#062126;border-color:var(--teal);font-weight:750}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:16px 0}.card,.panel{background:linear-gradient(145deg,var(--panel),#0c1e27);border:1px solid var(--line);border-radius:16px;padding:18px}.klabel{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.kvalue{font-size:clamp(25px,4vw,36px);font-weight:750;letter-spacing:-.04em;margin-top:7px}.kfoot{font-size:12px;color:var(--muted);margin-top:3px}
+.columns{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,1fr);gap:14px}.panel-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:16px}.sub{font-size:12px;color:var(--muted)}
+.chart{display:grid;gap:12px}.barrow{display:grid;grid-template-columns:minmax(100px,145px) 1fr 48px;gap:10px;align-items:center}.skill{font-size:13px;color:#d8e9eb;overflow-wrap:anywhere}.track{height:12px;background:#1a3741;border-radius:99px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#2eaaab,var(--teal));border-radius:99px}.pct{text-align:right;font-variant-numeric:tabular-nums;font-size:13px;color:#d9eeee}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted);font-weight:600}td:last-child,th:last-child{text-align:right;font-variant-numeric:tabular-nums}.note{background:#112831;border-left:3px solid var(--teal);padding:12px 14px;border-radius:0 10px 10px 0;color:#c5dfe1;font-size:13px;margin-top:14px}.warning{border-left-color:var(--amber)}.hidden{display:none}.status{padding:18px;border:1px dashed #45616b;border-radius:12px;color:var(--muted);margin-top:12px}.foot{margin-top:24px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}a{color:var(--teal)}
+@media(max-width:760px){main{padding:20px 12px 40px}.grid{grid-template-columns:1fr}.columns{grid-template-columns:1fr}.barrow{grid-template-columns:105px 1fr 42px}.card,.panel{padding:14px}}
+</style></head>
+<body><main>
+<div class="top"><div><div class="eyebrow">Analytics capstone · report preview</div><h1>India Remote Analyst<br>Job Market</h1><p>Skill demand and role comparison · aggregate snapshot</p></div><div class="pill">Snapshot collected 26 Oct 2026</div></div>
+<div class="tabs" role="tablist"><button class="tab active" id="skillTab" onclick="showPage('skills')">01 · Skill demand</button><button class="tab" id="roleTab" onclick="showPage('roles')">02 · Role comparison</button></div>
+<section id="skillsPage">
+<div class="grid">
+<div class="card"><div class="klabel">Listings in snapshot</div><div class="kvalue" id="listings">46</div><div class="kfoot">India-eligible remote listings</div></div>
+<div class="card"><div class="klabel">Top skill share</div><div class="kvalue" id="topShare">78.3%</div><div class="kfoot" id="topSkill">SQL</div></div>
+<div class="card"><div class="klabel">Skills tracked</div><div class="kvalue" id="skillsCount">12</div><div class="kfoot">Keyword mentions can overlap</div></div>
+</div>
+<div class="columns"><div class="panel"><div class="panel-head"><div><h2>Skill demand</h2><div class="sub">Share of listings mentioning each skill</div></div><span class="pill">Top 12</span></div><div class="chart" id="skillChart"><div class="status">Loading latest skill data…</div></div></div>
+<div class="panel"><div class="panel-head"><div><h2>Skill breakdown</h2><div class="sub">Count and share of listings</div></div></div><div style="overflow:auto"><table><thead><tr><th>Skill</th><th>Postings</th><th>Share</th></tr></thead><tbody id="skillTable"></tbody></table></div></div></div>
+<div class="note">One listing can mention multiple skills, so percentages may sum to more than 100%. The sample covers remote roles open to applicants in India; it does not establish Chennai or on-site demand.</div>
+<div class="grid">
+<div class="card"><div class="klabel">Salary disclosed</div><div class="kvalue">3 / 46</div><div class="kfoot">Only 3 listings report salary</div></div>
+<div class="card"><div class="klabel">INR annual ads</div><div class="kvalue">2</div><div class="kfoot">Keep currency and period separate</div></div>
+<div class="card"><div class="klabel">USD annual ads</div><div class="kvalue">1</div><div class="kfoot">Too small for market-average claims</div></div>
+</div>
+</section>
+<section id="rolesPage" class="hidden">
+<div class="panel"><div class="panel-head"><div><h2>Role comparison</h2><div class="sub">Skill mentions by role family · latest successful pull</div></div><span class="pill">Top 6 skills</span></div>
+<div id="roleStatus" class="status">Role-level counts are not present in the published files yet. The local SQLite database is intentionally private. The repository workflow now exports the aggregate CSV after its next successful collection run; this panel will load it automatically once available.</div>
+<div class="chart" id="roleChart"></div>
+<div style="overflow:auto;margin-top:14px"><table><thead><tr><th>Role family</th><th>Skill</th><th>Postings</th></tr></thead><tbody id="roleTable"></tbody></table></div></div>
+<div class="note warning">Role families are assigned by simple title keyword rules, not a validated occupational taxonomy. Do not interpret these counts as a comprehensive view of India's job market.</div>
+</section>
+<div class="foot">Source: project aggregate CSV reports. No job descriptions or individual listing rows are shown. This is a browser-based preview, not a Power BI .pbix file. <a href="dashboard.html">Open the existing dashboard</a> · <a href="https://github.com/Bharathpurvath/advanced-projects">Repository</a></div>
+</main>
+<script>
+function parseCSV(text){const lines=text.trim().split(/\r?\n/);if(lines.length<2)return[];const split=line=>{const out=[];let s='',q=false;for(let i=0;i<line.length;i++){const c=line[i];if(c==='"'&&line[i+1]==='"'&&q){s+='"';i++}else if(c==='"')q=!q;else if(c===','&&!q){out.push(s);s=''}else s+=c}out.push(s);return out};const heads=split(lines[0]);return lines.slice(1).map(l=>Object.fromEntries(split(l).map((v,i)=>[heads[i],v])))}
+function showPage(which){const skills=which==='skills';document.getElementById('skillsPage').classList.toggle('hidden',!skills);document.getElementById('rolesPage').classList.toggle('hidden',skills);document.getElementById('skillTab').classList.toggle('active',skills);document.getElementById('roleTab').classList.toggle('active',!skills)}
+async function loadSkills(){try{const r=await fetch('skill_demand_latest.csv',{cache:'no-store'});if(!r.ok)throw Error('CSV unavailable');const rows=parseCSV(await r.text()).sort((a,b)=>Number(b.pct_postings)-Number(a.pct_postings));if(!rows.length)throw Error('No rows');document.getElementById('listings').textContent='46';document.getElementById('skillsCount').textContent=rows.length;document.getElementById('topShare').textContent=Number(rows[0].pct_postings).toFixed(1)+'%';document.getElementById('topSkill').textContent=rows[0].skill;document.getElementById('skillChart').innerHTML=rows.map(x=>'<div class="barrow"><div class="skill">'+esc(x.skill)+'</div><div class="track"><div class="fill" style="width:'+Math.min(100,Number(x.pct_postings))+'%"></div></div><div class="pct">'+Number(x.pct_postings).toFixed(1)+'%</div></div>').join('');document.getElementById('skillTable').innerHTML=rows.map(x=>'<tr><td>'+esc(x.skill)+'</td><td>'+Number(x.postings)+'</td><td>'+Number(x.pct_postings).toFixed(1)+'%</td></tr>').join('')}catch(e){document.getElementById('skillChart').innerHTML='<div class="status">Could not load skill_demand_latest.csv. Open this page through the published GitHub Pages site, not as a local file.</div>'}}
+async function loadRoles(){try{const r=await fetch('role_skill_latest.csv',{cache:'no-store'});if(!r.ok)throw Error('not published');const rows=parseCSV(await r.text()).map(x=>({...x,postings:Number(x.postings)}));if(!rows.length)throw Error('empty');const totals={};rows.forEach(x=>totals[x.skill]=(totals[x.skill]||0)+x.postings);const top=new Set(Object.entries(totals).sort((a,b)=>b[1]-a[1]).slice(0,6).map(x=>x[0]));const filtered=rows.filter(x=>top.has(x.skill));const roles=[...new Set(filtered.map(x=>x.role_family))];document.getElementById('roleStatus').classList.add('hidden');document.getElementById('roleTable').innerHTML=filtered.sort((a,b)=>a.role_family.localeCompare(b.role_family)||b.postings-a.postings).map(x=>'<tr><td>'+esc(x.role_family)+'</td><td>'+esc(x.skill)+'</td><td>'+x.postings+'</td></tr>').join('');document.getElementById('roleChart').innerHTML=roles.map(role=>{const arr=filtered.filter(x=>x.role_family===role).sort((a,b)=>b.postings-a.postings);const max=Math.max(1,...arr.map(x=>x.postings));return '<div class="panel" style="padding:14px;margin-top:10px"><h2>'+esc(role)+'</h2><div class="chart">'+arr.map(x=>'<div class="barrow"><div class="skill">'+esc(x.skill)+'</div><div class="track"><div class="fill" style="width:'+(x.postings/max*100)+'%"></div></div><div class="pct">'+x.postings+'</div></div>').join('')+'</div></div>'}).join('')}catch(e){/* Honest empty state remains visible until workflow exports role-level data. */}}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+loadSkills();loadRoles();
+</script></body></html>
