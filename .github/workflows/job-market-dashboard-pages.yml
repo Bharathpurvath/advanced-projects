@@ -29,6 +29,8 @@ jobs:
         run: |
           mkdir -p _site
           cp -R india-data-analyst-job-market-capstone/reports/. _site/
+          mkdir -p _site/powerbi
+          cp -R india-data-analyst-job-market-capstone/powerbi/. _site/powerbi/
           cp india-data-analyst-job-market-capstone/reports/dashboard.html _site/index.html
           touch _site/.nojekyll
 
