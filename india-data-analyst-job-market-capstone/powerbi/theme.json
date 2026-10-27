@@ -1,0 +1,49 @@
+{
+  "name": "Job Market Teal",
+  "dataColors": [
+    "#087F8C",
+    "#18A6A6",
+    "#55C1B3",
+    "#F2B84B",
+    "#386FA4",
+    "#6C5B7B",
+    "#E07A5F"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#18323B",
+  "tableAccent": "#087F8C",
+  "visualStyles": {
+    "*": {
+      "*": [
+        {
+          "title": [
+            {
+              "fontFace": "Segoe UI Semibold",
+              "fontSize": 14,
+              "color": {
+                "solid": {
+                  "color": "#18323B"
+                }
+              }
+            }
+          ],
+          "labels": [
+            {
+              "fontFace": "Segoe UI",
+              "color": {
+                "solid": {
+                  "color": "#18323B"
+                }
+              }
+            }
+          ],
+          "background": [
+            {
+              "show": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
