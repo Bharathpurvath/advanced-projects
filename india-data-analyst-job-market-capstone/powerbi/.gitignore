@@ -1,0 +1,5 @@
+# Local Power BI report files can be large and may contain imported data
+*.pbix
+*.pbip
+*.pbit
+# Commit only explicitly reviewed screenshots
