@@ -1,8 +1,69 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>India Remote Data Analyst Job Market</title>
-    <style>:root{color-scheme:dark;--bg:#080b11;--panel:#101622;--line:#243044;--text:#ecf2ff;--muted:#9ba9bd;--accent:#91a8ff;--mint:#79e0c1}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -20%,#182441 0,transparent 46%),var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,sans-serif}main{max-width:1040px;margin:auto;padding:34px 22px 70px}nav,footer{color:var(--muted);font-size:13px;border-bottom:1px solid var(--line);padding:12px 0 20px}footer{border:0;border-top:1px solid var(--line);margin-top:32px;padding-top:20px}h1{font-size:clamp(38px,7vw,68px);line-height:1.05;letter-spacing:-.06em}.note,.panel{padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--panel);margin:24px 0}.note{border-color:#48537a}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line)}th{color:var(--mint)}img{max-width:100%;height:auto}a{color:var(--accent)}</style>
-    <main><nav>BHARATH B · DATA ANALYTICS</nav><h1>What do data analyst job ads ask for?</h1><p>India-eligible remote listings · refreshed by weekly snapshots</p>
-    <section class="note">Source: <a href="https://himalayas.app/api">Himalayas public jobs API</a>. The API returned 478 keyword candidates; the title filter retained 46 analyst listings. This is a remote-job sample filtered for India eligibility, not a census, and does not represent Chennai or on-site roles.</section>
-    <section class="panel"><h2>Skills mentioned</h2><img src="skill_demand.png" alt="Skill demand chart"><table><thead><tr><th>Skill</th><th>Listings</th><th>Share</th></tr></thead><tbody><tr><td>SQL</td><td>36</td><td>78.3%</td></tr><tr><td>Data visualization</td><td>34</td><td>73.9%</td></tr><tr><td>Python</td><td>32</td><td>69.6%</td></tr><tr><td>Tableau</td><td>25</td><td>54.3%</td></tr><tr><td>Power BI</td><td>24</td><td>52.2%</td></tr><tr><td>Communication</td><td>22</td><td>47.8%</td></tr><tr><td>Statistics</td><td>21</td><td>45.7%</td></tr><tr><td>Excel</td><td>18</td><td>39.1%</td></tr><tr><td>ETL / data pipelines</td><td>16</td><td>34.8%</td></tr><tr><td>Machine learning</td><td>11</td><td>23.9%</td></tr></tbody></table></section>
-    <section class="panel"><h2>Advertised salaries by experience label</h2><table><thead><tr><th>Experience</th><th>Currency</th><th>Period</th><th>Salary listings</th><th>Mean midpoint</th></tr></thead><tbody><tr><td>mid</td><td>INR</td><td>annual</td><td>2</td><td>637,500</td></tr><tr><td>mid</td><td>USD</td><td>annual</td><td>1</td><td>111,500</td></tr></tbody></table><p>Only postings with disclosed salary are included. Currencies and pay periods are kept separate.</p></section>
-    <section class="panel"><h2>Weekly listing counts</h2><p>One pull establishes the baseline; repeat weekly to observe changes.</p><table><thead><tr><th>Collected (UTC)</th><th>Listings</th></tr></thead><tbody><tr><td>2026-10-26T11:50:24+00:00</td><td>46</td></tr></tbody></table></section>
-    <p><a href="findings.md">Written findings</a> · <a href="skill_demand_latest.csv">Skill data</a> · <a href="salary_by_experience.csv">Salary data</a></p><footer>Analysis of remote listings available to India-based applicants. Source: Himalayas. Raw descriptions are not published.</footer></main></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Aggregate analysis of India-eligible remote data analyst job listings">
+<title>India Remote Data Analyst Job Market | Bharath B</title>
+<style>
+:root{color-scheme:dark;--bg:#081018;--panel:#101e29;--line:#253a48;--text:#eff7fa;--muted:#a4b7c2;--teal:#40d6c3;--blue:#75a9ff;--gold:#ffc66d;--radius:18px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 90% 0%,#12343d 0,transparent 38%),var(--bg);color:var(--text);font:15px/1.6 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+main{width:min(1120px,100%);margin:auto;padding:24px 18px 60px}header{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding:10px 0 18px;color:var(--muted);font-size:12px;letter-spacing:.12em}
+.pill{border:1px solid var(--line);padding:5px 10px;border-radius:99px;letter-spacing:0;color:var(--teal)}
+h1{font-size:clamp(34px,7vw,66px);letter-spacing:-.055em;line-height:1.04;max-width:850px;margin:38px 0 12px}h2{font-size:21px;letter-spacing:-.025em;margin:0 0 6px}h3{font-size:15px;margin:0 0 8px}p{margin:8px 0;color:var(--muted)}.intro{font-size:17px;max-width:760px}.small{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:24px 0}.card,.panel{border:1px solid var(--line);background:linear-gradient(145deg,#132431,var(--panel));border-radius:var(--radius);padding:18px;min-width:0}.metric{font-size:clamp(27px,4vw,38px);font-weight:750;letter-spacing:-.04em;color:var(--teal)}.metric-label{color:var(--muted);font-size:13px}
+.panel{margin:16px 0}.panel-head{display:flex;justify-content:space-between;gap:12px;align-items:start;margin-bottom:18px}.tag{font-size:11px;color:var(--teal);border:1px solid #245b5b;border-radius:99px;padding:3px 8px;white-space:nowrap}
+.skills{display:grid;gap:12px}.skill{display:grid;grid-template-columns:minmax(115px,190px) minmax(60px,1fr) 58px;gap:12px;align-items:center}.skill-name{font-size:13px;overflow-wrap:anywhere}.track{height:12px;border-radius:99px;background:#203542;overflow:hidden}.fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#159b9c,var(--teal))}.pct{text-align:right;font-variant-numeric:tabular-nums;font-size:13px;color:var(--teal)}
+input{width:100%;background:#0a151e;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px 12px;font:inherit;margin:0 0 16px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}th{color:var(--teal);font-weight:600}td:last-child,th:last-child{text-align:right}.table-wrap{overflow-x:auto}.salary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.salary-number{font-size:clamp(22px,4vw,32px);font-weight:750;letter-spacing:-.04em}.currency{color:var(--gold);font-size:12px;letter-spacing:.08em}.notice{border-left:3px solid var(--gold);padding:10px 13px;background:#2a2419;border-radius:0 10px 10px 0;color:#f4dfbd;font-size:13px}.empty{padding:18px;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}a{color:var(--teal)}footer{border-top:1px solid var(--line);padding-top:18px;margin-top:30px;color:var(--muted);font-size:12px}
+@media(max-width:620px){main{padding:16px 13px 40px}.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.card{padding:12px 9px}.metric{font-size:25px}.metric-label{font-size:11px}.skill{grid-template-columns:105px minmax(30px,1fr) 45px;gap:8px}.skill-name{font-size:12px}.salary-grid{grid-template-columns:1fr}.panel{padding:14px}.pill{font-size:10px}}
+</style>
+</head>
+<body><main>
+<header><span>BHARATH B · DATA ANALYTICS</span><span class="pill">SNAPSHOT · 26 OCT 2026</span></header>
+<h1>What do data analyst job ads ask for?</h1>
+<p class="intro">A data-led look at skills, salary disclosure and role demand in remote analyst listings open to applicants in India.</p>
+<p class="small">Source: Himalayas public Jobs API · 478 broad search candidates · 46 listings retained after title filtering</p>
+<div class="grid" aria-label="Snapshot summary">
+<div class="card"><div class="metric">46</div><div class="metric-label">Analyst listings</div></div>
+<div class="card"><div class="metric">78.3%</div><div class="metric-label">Top skill · SQL</div></div>
+<div class="card"><div class="metric">12</div><div class="metric-label">Skills tracked</div></div>
+</div>
+<section class="panel"><div class="panel-head"><div><h2>Skill demand</h2><p>Share of listings mentioning each skill</p></div><span class="tag">46 listings</span></div>
+<input id="skillSearch" type="search" placeholder="Search skills, e.g. Python or Excel" aria-label="Search skills">
+<div id="skillChart" class="skills"></div>
+<p class="small">A listing may mention multiple skills, so percentages do not add up to 100%. Values are keyword matches, not a measure of proficiency required.</p>
+<div class="table-wrap"><table><thead><tr><th>Skill</th><th>Listings</th><th>Share</th></tr></thead><tbody id="skillRows"></tbody></table></div>
+</section>
+<section class="panel"><div class="panel-head"><div><h2>Advertised salary sample</h2><p>Mid-level ads with disclosed salary</p></div><span class="tag">3 ads only</span></div>
+<div class="salary-grid">
+<div class="card"><div class="currency">INR · ANNUAL</div><div class="salary-number">₹6,37,500</div><p>Mean of two advertised salary midpoints</p><p class="small">Observed range: ₹4,25,000 to ₹10,00,000</p></div>
+<div class="card"><div class="currency">USD · ANNUAL</div><div class="salary-number">$111,500</div><p>Midpoint of one advertised salary range</p><p class="small">Observed range: $98,000 to $125,000</p></div>
+</div><p class="notice">This is not a market average. Only 3 of 46 listings disclose salary. INR and USD figures are intentionally kept separate and must not be compared directly.</p>
+</section>
+<section class="panel"><div class="panel-head"><div><h2>Role comparison</h2><p>Role-level skill counts require the local SQLite database</p></div><span class="tag">Pending local export</span></div>
+<div class="empty">The repository excludes the local database by design. To build this chart, run the SQL export documented in <a href="../powerbi/export_role_skill.sql">the Power BI folder</a> on the computer that holds data/himalayas_jobs.db, then import reports/role_skill_latest.csv into your reporting tool. No role counts are fabricated here.</div>
+</section>
+<section class="panel"><div class="panel-head"><div><h2>Snapshot history</h2><p>Listings returned by each weekly search</p></div><span class="tag">Baseline only</span></div>
+<div class="grid" style="margin:0"><div class="card"><div class="metric">46</div><div class="metric-label">26 Oct 2026</div></div><div class="card"><div class="metric">1</div><div class="metric-label">Successful snapshot</div></div><div class="card"><div class="metric">3–4</div><div class="metric-label">Pulls before trend view</div></div></div>
+<p>One observation establishes a baseline, not a trend. Collect additional weekly snapshots before interpreting change over time.</p>
+</section>
+<section class="panel"><h2>Method and limitations</h2>
+<p>The sample contains remote roles returned by the Himalayas public Jobs API and filtered for India eligibility. It is not a census of all jobs in India and does not establish that a role is based in Chennai or on-site.</p>
+<p>Skill shares count keyword matches in listing content. Salary values preserve the reported currency and pay period. Raw job descriptions and listing-level exports are not published.</p>
+<p><a href="findings.md">Read written findings</a> · <a href="skill_demand_latest.csv">Skill data CSV</a> · <a href="salary_by_experience.csv">Salary data CSV</a> · <a href="../powerbi/README.md">Power BI setup guide</a></p>
+</section>
+<footer>India-eligible remote data analyst job market · Aggregate analysis only · Data checked 27 October 2026</footer>
+</main>
+<script>
+const skills=[
+{skill:"SQL",postings:36,pct:78.3},{skill:"Data visualization",postings:34,pct:73.9},{skill:"Python",postings:32,pct:69.6},{skill:"Tableau",postings:25,pct:54.3},{skill:"Power BI",postings:24,pct:52.2},{skill:"Communication",postings:22,pct:47.8},{skill:"Statistics",postings:21,pct:45.7},{skill:"Excel",postings:18,pct:39.1},{skill:"ETL / data pipelines",postings:16,pct:34.8},{skill:"Machine learning",postings:11,pct:23.9},{skill:"Cloud (AWS/Azure/GCP)",postings:10,pct:21.7},{skill:"Big data (Spark/Hadoop)",postings:6,pct:13.0}
+];
+const chart=document.getElementById("skillChart"),rows=document.getElementById("skillRows"),search=document.getElementById("skillSearch");
+function render(){const q=search.value.trim().toLowerCase();const filtered=skills.filter(s=>s.skill.toLowerCase().includes(q));chart.innerHTML="";rows.innerHTML="";
+filtered.forEach(s=>{const item=document.createElement("div");item.className="skill";const name=document.createElement("div");name.className="skill-name";name.textContent=s.skill;const track=document.createElement("div");track.className="track";const fill=document.createElement("div");fill.className="fill";fill.style.width=s.pct+"%";track.appendChild(fill);const pct=document.createElement("div");pct.className="pct";pct.textContent=s.pct.toFixed(1)+"%";item.append(name,track,pct);chart.appendChild(item);
+const tr=document.createElement("tr");[s.skill,String(s.postings),s.pct.toFixed(1)+"%"].forEach((v,i)=>{const td=document.createElement("td");td.textContent=v;tr.appendChild(td)});rows.appendChild(tr);});
+if(!filtered.length){chart.textContent="No matching skills";const tr=document.createElement("tr");const td=document.createElement("td");td.colSpan=3;td.textContent="No matching skills";tr.appendChild(td);rows.appendChild(tr);}
+}
+search.addEventListener("input",render);render();
+</script>
+</body></html>
