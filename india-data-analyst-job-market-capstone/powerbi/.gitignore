@@ -1,5 +1,6 @@
-# Local Power BI report files can be large and may contain imported data
+# Local Power BI report files can be large and may contain imported data.
+# Track only the reviewed deliverable for this project.
 *.pbix
 *.pbip
 *.pbit
-# Commit only explicitly reviewed screenshots
+!job-market-dashboard.pbix
