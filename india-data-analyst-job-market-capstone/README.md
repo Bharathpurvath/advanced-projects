@@ -1,6 +1,6 @@
 # India Remote Data Analyst Job Market Capstone
 
-**Dashboards:** [Current aggregate dashboard](reports/dashboard.html) · [Two-page mobile preview — Skill demand and Role comparison](reports/powerbi_preview.html) · [Role-skill aggregate CSV](reports/role_skill_latest.csv) · **Scope:** remote roles open to India-based applicants. This source has no reliable Chennai worksite filter, so the project does not claim to represent Chennai or on-site vacancies.
+**Dashboards:** [Power BI report (.pbix) — Skill demand and Role comparison](powerbi/job-market-dashboard.pbix) · [Current aggregate dashboard](reports/dashboard.html) · [Two-page mobile preview](reports/powerbi_preview.html) · [Role-skill aggregate CSV](reports/role_skill_latest.csv) · **Scope:** remote roles open to India-based applicants. This source has no reliable Chennai worksite filter, so the project does not claim to represent Chennai or on-site vacancies.
 
 ## Question
 
@@ -49,7 +49,7 @@ The public repository contains code and aggregate reporting only. The database a
 
 ## Power BI dashboard
 
-A step-by-step Power BI Desktop guide and teal theme are available in [powerbi/README.md](powerbi/README.md). The guide covers the skill-demand page, role comparison page, salary caveats, and when it is valid to add a trends page. A genuine `.pbix` file must be authored and saved in Power BI Desktop on Windows; Android can view the HTML dashboards and source data but cannot run Power BI Desktop natively.
+The Power BI report build notes and teal theme are available in [powerbi/README.md](powerbi/README.md). The guide covers the skill-demand page, role comparison page, salary caveats, and when it is valid to add a trends page. The published [Power BI report](powerbi/job-market-dashboard.pbix) contains the Skill demand and Role comparison pages. Open it with Power BI Desktop to inspect and interact with the report.
 
 To prepare the role comparison data, from this project directory run:
 
