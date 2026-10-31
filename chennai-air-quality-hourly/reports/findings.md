@@ -2,15 +2,15 @@
 
 ## Sample and provenance
 
-- Coverage: **2026-10-11 00:00** to **2026-10-29 23:00 IST**, 456 hourly timestamps.
+- Coverage: **2026-10-11 00:00** to **2026-10-30 23:00 IST**, 480 hourly timestamps.
 - Requested coordinates: **13.0827° N, 80.2707° E**; the returned model grid coordinates are preserved in `data/chennai_hourly.csv`.
 - PM2.5 is a gridded CAMS model estimate served through Open-Meteo, not a station reading. Weather is Open-Meteo historical reanalysis.
 
 ## Findings
 
-1. **Hour-of-day pattern:** highest hourly mean was at **19:00 IST** (21.17 µg/m³). Commute windows (07:00–09:59 and 17:00–19:59) averaged **18.98 µg/m³** (median 12.10) versus **18.19 µg/m³** at other hours.
-2. **Rain comparison:** rain hours averaged **9.70 µg/m³** across 235 hours and dry hours averaged **27.63 µg/m³** across 221 hours. Hours immediately before a rainy next hour averaged **9.62 µg/m³** versus **27.71 µg/m³** otherwise. These are descriptive associations, not evidence that rain caused a change.
-3. **Sunday:** mean of hourly PM2.5 averages was **17.77 µg/m³** on Sundays and **18.51 µg/m³** Monday–Saturday. Interpret cautiously with this short sample.
+1. **Hour-of-day pattern:** highest hourly mean was at **19:00 IST** (22.20 µg/m³). Commute windows (07:00–09:59 and 17:00–19:59) averaged **19.98 µg/m³** (median 12.55) versus **19.15 µg/m³** at other hours.
+2. **Rain comparison:** rain hours averaged **9.83 µg/m³** across 236 hours and dry hours averaged **28.57 µg/m³** across 244 hours. Hours immediately before a rainy next hour averaged **9.76 µg/m³** versus **28.64 µg/m³** otherwise. These are descriptive associations, not evidence that rain caused a change.
+3. **Sunday:** mean of hourly PM2.5 averages was **17.77 µg/m³** on Sundays and **19.64 µg/m³** Monday–Saturday. Interpret cautiously with this short sample.
 
 ## Caveats
 
