@@ -2,6 +2,22 @@
 
 **Dashboards:** [Power BI report (.pbix) — Skill demand and Role comparison](powerbi/job-market-dashboard.pbix) · [Current aggregate dashboard](reports/dashboard.html) · [Two-page mobile preview](reports/powerbi_preview.html) · [Role-skill aggregate CSV](reports/role_skill_latest.csv) · **Scope:** remote roles open to India-based applicants. This source has no reliable Chennai worksite filter, so the project does not claim to represent Chennai or on-site vacancies.
 
+## Dashboard screenshots
+
+Captured from the live GitHub Pages dashboards on 1 November 2026. The Power BI preview is a browser-based view of the report pages; the downloadable `.pbix` is provided separately in [`powerbi/`](powerbi/).
+
+**Live aggregate dashboard**
+
+![Screenshot of the live aggregate job-market dashboard](screenshots/live-dashboard.png)
+
+**Power BI preview — Skill demand**
+
+![Screenshot of the Skill demand page](screenshots/powerbi-preview.png)
+
+**Power BI preview — Role comparison**
+
+![Screenshot of the Role comparison page](screenshots/powerbi-role-comparison.png)
+
 ## Question
 
 What skills do India-eligible remote data analyst job listings ask for, what salary ranges do they disclose by experience level, and how do the number and mix of listings change across weekly snapshots?
