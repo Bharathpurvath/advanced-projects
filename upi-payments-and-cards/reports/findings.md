@@ -2,15 +2,15 @@
 
 ## Coverage and units
 
-- RBI DBIE monthly observations: **81**, from **November 2019** through **July 2026**.
+- RBI DBIE monthly observations: **82**, from **November 2019** through **August 2026**.
 - Reported volume is normalized from lakh transactions to millions; reported value is ₹ crore.
 - Average transaction value = value (₹ crore) × 100 / volume (lakh).
 
 ## Findings
 
-1. **UPI scale:** monthly UPI volume rose from **1,218.8 million** to **23,658.4 million**, about **19.4×** over 80 months. Latest year-over-year growth was **21.5%**.
-2. **Card comparison:** in July 2026, credit-card transaction volume was **605.3 million** and debit-card volume was **101.6 million**. Their latest year-over-year changes were **24.5%** and **-9.4%**, respectively.
-3. **Ticket size:** latest average UPI transaction value was **₹1,263** versus **₹1,553** in November 2019. Compared with July 2025, UPI volume changed 21.5% and UPI value changed 19.1%.
+1. **UPI scale:** monthly UPI volume rose from **1,218.8 million** to **24,509.0 million**, about **20.1×** over 81 months. Latest year-over-year growth was **22.5%**.
+2. **Card comparison:** in August 2026, credit-card transaction volume was **632.4 million** and debit-card volume was **103.9 million**. Their latest year-over-year changes were **28.1%** and **-7.3%**, respectively.
+3. **Ticket size:** latest average UPI transaction value was **₹1,217** versus **₹1,553** in November 2019. Compared with August 2025, UPI volume changed 22.5% and UPI value changed 20.0%.
 4. **Channel mix:** UPI was **97.1%** of the combined UPI, credit-card, and debit-card transaction count in the latest month. This denominator covers these three channels only.
 
 ## Interpretation
