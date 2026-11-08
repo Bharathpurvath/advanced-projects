@@ -31,11 +31,11 @@ Each workflow supports manual dispatch. Source allowances and update timing appl
 
 These small, browser-only demos complement older project entries with clearly stated limits:
 
-- [Cybersecurity Incident Triage Lab](https://bharathpurvath.github.io/advanced-projects/live-demos/cybersecurity-triage/) — independent educational demo using synthetic events; separate from the TCS iON exercise.
-- [Home Automation Simulator](https://bharathpurvath.github.io/advanced-projects/live-demos/iot-home-automation/) — browser simulation; it does not connect to physical Arduino devices.
-- [System Downtime Risk Explorer](https://bharathpurvath.github.io/advanced-projects/live-demos/downtime-risk/) — logistic-regression demo trained and evaluated on generated telemetry, not operational data.
-- [CubeSat Orbit & Telemetry Lab](https://bharathpurvath.github.io/advanced-projects/live-demos/cubesat-orbit/) — idealized circular-orbit and power visualization, not a flight model.
-- [Data Analytics Dashboard](https://bharathpurvath.github.io/advanced-projects/live-demos/data-analytics-dashboard/) — interactive filters and charts over fictional sample orders.
+- [Cybersecurity Incident Triage Lab](https://bharathpurvath.github.io/advanced-projects/live-demos/cybersecurity-triage/index.html) — independent educational demo using synthetic events; separate from the TCS iON exercise.
+- [Home Automation Simulator](https://bharathpurvath.github.io/advanced-projects/live-demos/iot-home-automation/index.html) — browser simulation; it does not connect to physical Arduino devices.
+- [System Downtime Risk Explorer](https://bharathpurvath.github.io/advanced-projects/live-demos/downtime-risk/index.html) — logistic-regression demo trained and evaluated on generated telemetry, not operational data.
+- [CubeSat Orbit & Telemetry Lab](https://bharathpurvath.github.io/advanced-projects/live-demos/cubesat-orbit/index.html) — idealized circular-orbit and power visualization, not a flight model.
+- [Data Analytics Dashboard](https://bharathpurvath.github.io/advanced-projects/live-demos/data-analytics-dashboard/index.html) — interactive filters and charts over fictional sample orders.
 
 ## Software engineering labs
 
