@@ -2,7 +2,7 @@
 
 [Personal portfolio](https://bharathpurvath.github.io/bharath-portfolio/) · [Project gallery](https://bharathpurvath.github.io/advanced-projects/)
 
-This repository contains six data-analytics case studies and 20 educational software-engineering labs. Each case study documents its question, data source, method, results, and limits.
+This repository contains six data-analytics case studies, 20 educational software-engineering labs, and five standalone browser companion demos. Each project documents its question, data source or simulation scope, method, results, and limits.
 
 ## Data analytics case studies
 
@@ -26,6 +26,16 @@ GitHub Actions workflows live in the repository-root `.github/workflows/` direct
 - `job-market-weekly.yml` collects weekly, keeps the listing database as a private workflow artifact for history, and publishes aggregate outputs only.
 
 Each workflow supports manual dispatch. Source allowances and update timing apply; scheduled jobs may start late.
+
+## Standalone LinkedIn companion demos
+
+These small, browser-only demos complement older project entries with clearly stated limits:
+
+- [Cybersecurity Incident Triage Lab](https://bharathpurvath.github.io/advanced-projects/live-demos/cybersecurity-triage/) — independent educational demo using synthetic events; separate from the TCS iON exercise.
+- [Home Automation Simulator](https://bharathpurvath.github.io/advanced-projects/live-demos/iot-home-automation/) — browser simulation; it does not connect to physical Arduino devices.
+- [System Downtime Risk Explorer](https://bharathpurvath.github.io/advanced-projects/live-demos/downtime-risk/) — logistic-regression demo trained and evaluated on generated telemetry, not operational data.
+- [CubeSat Orbit & Telemetry Lab](https://bharathpurvath.github.io/advanced-projects/live-demos/cubesat-orbit/) — idealized circular-orbit and power visualization, not a flight model.
+- [Data Analytics Dashboard](https://bharathpurvath.github.io/advanced-projects/live-demos/data-analytics-dashboard/) — interactive filters and charts over fictional sample orders.
 
 ## Software engineering labs
 
