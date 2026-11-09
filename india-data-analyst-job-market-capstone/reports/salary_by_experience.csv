@@ -1,2 +1,3 @@
 experience_level,salary_currency,salary_period,salary_ads,mean_midpoint,salary_min,salary_max
-mid,INR,annual,2,637500.0,425000.0,1000000.0
+mid,INR,annual,3,702516.6666666666,425000.0,1000000.0
+mid,USD,monthly,1,1650.0,1500.0,1800.0
