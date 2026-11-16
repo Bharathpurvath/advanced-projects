@@ -14,15 +14,15 @@ BI analyst,Machine learning,1
 BI analyst,Python,1
 BI analyst,SQL,1
 BI analyst,Tableau,1
-Data analyst,SQL,27
+Data analyst,SQL,28
 Data analyst,Data visualization,26
-Data analyst,Python,21
-Data analyst,Communication,18
-Data analyst,Excel,18
+Data analyst,Communication,20
+Data analyst,Python,20
+Data analyst,Power BI,18
 Data analyst,Tableau,18
-Data analyst,Power BI,17
-Data analyst,Statistics,17
-Data analyst,Cloud (AWS/Azure/GCP),10
+Data analyst,Excel,17
+Data analyst,Statistics,15
+Data analyst,Cloud (AWS/Azure/GCP),12
 Data analyst,ETL / data pipelines,8
 Data analyst,Machine learning,6
 Data analyst,Big data (Spark/Hadoop),5

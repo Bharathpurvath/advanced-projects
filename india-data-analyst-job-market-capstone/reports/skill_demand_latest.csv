@@ -1,13 +1,13 @@
 pull_id,skill,postings,pct_postings
-a4c57323-db02-4db5-b247-48a41e85f2b0,Data visualization,30,78.9
-a4c57323-db02-4db5-b247-48a41e85f2b0,SQL,28,73.7
-a4c57323-db02-4db5-b247-48a41e85f2b0,Python,24,63.2
-a4c57323-db02-4db5-b247-48a41e85f2b0,Tableau,21,55.3
-a4c57323-db02-4db5-b247-48a41e85f2b0,Excel,20,52.6
-a4c57323-db02-4db5-b247-48a41e85f2b0,Power BI,19,50.0
-a4c57323-db02-4db5-b247-48a41e85f2b0,Communication,18,47.4
-a4c57323-db02-4db5-b247-48a41e85f2b0,Statistics,18,47.4
-a4c57323-db02-4db5-b247-48a41e85f2b0,ETL / data pipelines,11,28.9
-a4c57323-db02-4db5-b247-48a41e85f2b0,Cloud (AWS/Azure/GCP),10,26.3
-a4c57323-db02-4db5-b247-48a41e85f2b0,Machine learning,7,18.4
-a4c57323-db02-4db5-b247-48a41e85f2b0,Big data (Spark/Hadoop),6,15.8
+ec9d55ab-e2c1-4e89-a439-0a6a27190ed4,Data visualization,30,76.9
+ec9d55ab-e2c1-4e89-a439-0a6a27190ed4,SQL,29,74.4
+ec9d55ab-e2c1-4e89-a439-0a6a27190ed4,Python,23,59.0
+ec9d55ab-e2c1-4e89-a439-0a6a27190ed4,Tableau,21,53.8
+ec9d55ab-e2c1-4e89-a439-0a6a27190ed4,Communication,20,51.3
+ec9d55ab-e2c1-4e89-a439-0a6a27190ed4,Power BI,20,51.3
+ec9d55ab-e2c1-4e89-a439-0a6a27190ed4,Excel,19,48.7
+ec9d55ab-e2c1-4e89-a439-0a6a27190ed4,Statistics,16,41.0
+ec9d55ab-e2c1-4e89-a439-0a6a27190ed4,Cloud (AWS/Azure/GCP),12,30.8
+ec9d55ab-e2c1-4e89-a439-0a6a27190ed4,ETL / data pipelines,11,28.2
+ec9d55ab-e2c1-4e89-a439-0a6a27190ed4,Machine learning,7,17.9
+ec9d55ab-e2c1-4e89-a439-0a6a27190ed4,Big data (Spark/Hadoop),6,15.4
