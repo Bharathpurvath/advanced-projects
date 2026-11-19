@@ -1,3 +1,3 @@
 is_rain,pm2_5_mean,pm2_5_median,hours,condition
-False,31.7643115942029,32.150000000000006,552,Dry hour
+False,33.20034722222223,32.7,576,Dry hour
 True,11.608055555555554,7.45,360,Rain hour
