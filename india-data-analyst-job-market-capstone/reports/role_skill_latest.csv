@@ -2,11 +2,13 @@ role_family,skill,postings
 Analytics analyst,Data visualization,2
 Analytics analyst,Power BI,2
 Analytics analyst,Python,2
-Analytics analyst,Tableau,2
-Analytics analyst,Big data (Spark/Hadoop),1
+Analytics analyst,Cloud (AWS/Azure/GCP),1
+Analytics analyst,Communication,1
 Analytics analyst,ETL / data pipelines,1
 Analytics analyst,Excel,1
+Analytics analyst,SQL,1
 Analytics analyst,Statistics,1
+Analytics analyst,Tableau,1
 BI analyst,Data visualization,2
 BI analyst,ETL / data pipelines,2
 BI analyst,Excel,1
@@ -14,15 +16,15 @@ BI analyst,Machine learning,1
 BI analyst,Python,1
 BI analyst,SQL,1
 BI analyst,Tableau,1
-Data analyst,SQL,28
-Data analyst,Data visualization,26
-Data analyst,Communication,20
-Data analyst,Python,20
-Data analyst,Power BI,18
-Data analyst,Tableau,18
-Data analyst,Excel,17
-Data analyst,Statistics,15
-Data analyst,Cloud (AWS/Azure/GCP),12
+Data analyst,SQL,24
+Data analyst,Data visualization,23
+Data analyst,Python,18
+Data analyst,Communication,16
+Data analyst,Statistics,16
+Data analyst,Tableau,16
+Data analyst,Power BI,15
+Data analyst,Excel,14
+Data analyst,Cloud (AWS/Azure/GCP),9
 Data analyst,ETL / data pipelines,8
 Data analyst,Machine learning,6
-Data analyst,Big data (Spark/Hadoop),5
+Data analyst,Big data (Spark/Hadoop),3

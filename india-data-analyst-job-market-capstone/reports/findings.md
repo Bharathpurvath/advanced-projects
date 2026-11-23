@@ -2,28 +2,28 @@
 
 Data source: [Himalayas public jobs API](https://himalayas.app/api). This is a remote-job search sample filtered for India eligibility, not all jobs in India.
 
-Successful pulls: 5. The latest API search reported 408 keyword candidates; the title filter retained 39 distinct analyst listings.
+Successful pulls: 6. The latest API search reported 409 keyword candidates; the title filter retained 34 distinct analyst listings.
 
 The collector keeps data analyst, analytics analyst, and business-intelligence analyst titles; content-only matches are excluded.
 
 ## Most frequently detected skills
 
-Counts are from the latest pull (39 listings); a listing may mention multiple skills.
+Counts are from the latest pull (34 listings); a listing may mention multiple skills.
 
-- Data visualization: 30 listings (76.9%).
-- SQL: 29 listings (74.4%).
-- Python: 23 listings (59.0%).
-- Tableau: 21 listings (53.8%).
-- Communication: 20 listings (51.3%).
-- Power BI: 20 listings (51.3%).
-- Excel: 19 listings (48.7%).
-- Statistics: 16 listings (41.0%).
-- Cloud (AWS/Azure/GCP): 12 listings (30.8%).
-- ETL / data pipelines: 11 listings (28.2%).
+- Data visualization: 27 listings (79.4%).
+- SQL: 26 listings (76.5%).
+- Python: 21 listings (61.8%).
+- Tableau: 18 listings (52.9%).
+- Statistics: 17 listings (50.0%).
+- Power BI: 17 listings (50.0%).
+- Communication: 17 listings (50.0%).
+- Excel: 16 listings (47.1%).
+- ETL / data pipelines: 11 listings (32.4%).
+- Cloud (AWS/Azure/GCP): 10 listings (29.4%).
 
 ## Advertised salary coverage
 
-4 of 39 latest listings (10.3%) disclose a salary range. See `salary_by_experience.csv` for salary groups split by experience label, currency, and period. Values are not converted across currencies or periods.
+4 of 34 latest listings (11.8%) disclose a salary range. See `salary_by_experience.csv` for salary groups split by experience label, currency, and period. Values are not converted across currencies or periods.
 
 ## Change across weekly pulls
 
